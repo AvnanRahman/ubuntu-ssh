@@ -37,4 +37,4 @@ USER ubuntu
 EXPOSE 5617
 
 # Start SSH server
-CMD ["/usr/sbin/sshd", "-D"]
+CMD ["/usr/sbin/sshd", "-D", "-f", "/etc/ssh/sshd_config"]
