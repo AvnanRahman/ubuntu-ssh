@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-ssh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-ssh
+  template:
+    metadata:
+      labels:
+        app: ubuntu-ssh
+    spec:
+      containers:
+      - name: ubuntu-ssh
+        image: hiroominan/ubuntu-ssh-22.04
+        ports:
+        - containerPort: 5617
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+          requests:
+            cpu: "2"
+            memory: "4Gi"
+      volumes:
+      - name: ssh-storage
+        persistentVolumeClaim:
+          claimName: pvc-ubuntu-ssh
