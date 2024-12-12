@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-ubuntu-22
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 40Gi
+  storageClassName: storage-nvme-c1
