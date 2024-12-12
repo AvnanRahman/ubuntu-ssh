@@ -16,7 +16,13 @@ RUN useradd -m -s /bin/bash ubuntu && echo "ubuntu:password" | chpasswd && \
     sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     echo "HostKey /etc/ssh/ssh_host_rsa_key" >> /etc/ssh/sshd_config && \
     echo "HostKey /etc/ssh/ssh_host_ecdsa_key" >> /etc/ssh/sshd_config && \
-    echo "HostKey /etc/ssh/ssh_host_ed25519_key" >> /etc/ssh/sshd_config
+    echo "HostKey /etc/ssh/ssh_host_ed25519_key" >> /etc/ssh/sshd_config && \
+    echo "AllowUsers ubuntu" >> /etc/ssh/sshd_config && \ 
+    echo "UsePrivilegeSeparation yes" >> /etc/ssh/sshd_config && \ 
+    echo "Privilege separation path: /var/empty/sshd" >> /etc/ssh/sshd_config
+
+RUN mkdir -p /var/empty/sshd
+RUN chmod 755 /var/empty/sshd
 
 # Generate SSH host keys manually
 RUN rm -f /etc/ssh/ssh_host_* && \
