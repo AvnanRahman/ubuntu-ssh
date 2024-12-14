@@ -45,6 +45,9 @@ spec:
         - >
           echo "$USER_SSH_PUBLIC_KEY" > $HOME/.ssh/authorized_keys &&
           exec dropbear -E -F -w -g -s -j -k -p 5617 -P ./dropbearPID -r ./dropbear_rsa_host_key
+        volumeMounts:
+          - name: ssh-storage
+            mountPath: /data
       volumes:
       - name: ssh-storage
         persistentVolumeClaim:

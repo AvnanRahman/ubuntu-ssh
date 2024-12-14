@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends dropbear openssh-sftp-server nano net-tools curl wget vim && \
+    apt-get install -y --no-install-recommends dropbear openssh-sftp-server nano net-tools curl wget vim sudo python3 python3-pip python2 && \
     apt-get clean
 
 ARG USER_NAME=ubuntu
