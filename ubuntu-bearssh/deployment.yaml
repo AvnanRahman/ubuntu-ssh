@@ -43,10 +43,6 @@ spec:
         - /bin/sh
         - -c
         - >
-          dockerd-rootless-setuptool.sh install --force && 
-          echo "export PATH=/usr/bin:$PATH" >> $HOME/.bashrc &&
-          echo "export DOCKER_HOST=unix://$HOME/.docker/run/docker.sock" >> $HOME/.bashrc &&
-          dockerd-rootless.sh &&
           echo "$USER_SSH_PUBLIC_KEY" > $HOME/.ssh/authorized_keys &&
           exec dropbear -E -F -w -g -s -j -k -p 5617 -P ./dropbearPID -r ./dropbear_rsa_host_key
         volumeMounts:
