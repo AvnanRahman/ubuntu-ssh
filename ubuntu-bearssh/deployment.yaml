@@ -14,8 +14,8 @@ spec:
         app: ubuntu-22
     spec:
       runtimeClassName: nvidia
-#      nodeSelector:
-#        nvidia.com/gpu.product: "NVIDIA-H100-80GB-HBM3"
+      nodeSelector:
+        nvidia.com/gpu.product: "NVIDIA-H100-80GB-HBM3"
       containers:
       - name: ubuntu-22
         image: hiroominan/ubuntu-dropbear-22.04
@@ -23,7 +23,7 @@ spec:
         - containerPort: 5617
         resources:
           limits:
-            nvidia.com/gpu: 1 # Request 8 NVIDIA GPUs
+            nvidia.com/gpu: 1 
             cpu: "4"
             memory: "8Gi"
           requests:
