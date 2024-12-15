@@ -16,7 +16,7 @@ ARG GROUP_ID=$USER_ID
 ARG HOME=/home/$USER_NAME
 
 RUN groupadd --gid $GROUP_ID $GROUP_NAME && \
-    useradd --uid $USER_ID --gid $GROUP_ID --create-home $USER_NAME && \
+    useradd --uid $USER_ID --gid $GROUP_ID --create-home --shell /bin/bash --no-log-init $USER_NAME && \
     echo "$USER_NAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER $USER_NAME
