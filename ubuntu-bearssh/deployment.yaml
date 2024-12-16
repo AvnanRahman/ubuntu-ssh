@@ -13,7 +13,7 @@ spec:
       labels:
         app: ubuntu-22
     spec:
-      # runtimeClassName: nvidia
+      runtimeClassName: nvidia
       nodeSelector:
         nvidia.com/gpu.product: "NVIDIA-H100-80GB-HBM3"
       containers:
