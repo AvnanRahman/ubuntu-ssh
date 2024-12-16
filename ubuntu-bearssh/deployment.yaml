@@ -18,7 +18,7 @@ spec:
         nvidia.com/gpu.product: "NVIDIA-H100-80GB-HBM3"
       containers:
       - name: ubuntu-22
-        image: hiroominan/ubuntu-dropbear-22.04
+        image: hiroominan/ubuntu-dropbear-22.04:python3.12.4
         ports:
         - containerPort: 5617
         resources:
@@ -43,6 +43,7 @@ spec:
         - /bin/sh
         - -c
         - >
+          echo 'export PATH=$PATH:/usr/local/bin' >> ~/.bashrc &&
           echo "$USER_SSH_PUBLIC_KEY" > $HOME/.ssh/authorized_keys &&
           exec dropbear -E -F -w -g -s -j -k -p 5617 -P ./dropbearPID -r ./dropbear_rsa_host_key
         volumeMounts:

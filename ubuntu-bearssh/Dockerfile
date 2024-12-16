@@ -5,8 +5,33 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends dropbear openssh-sftp-server \ 
     nano net-tools wget vim sudo gnupg lsb-release iptables \
     curl apt-transport-https software-properties-common ca-certificates \
-    python3 python3-pip python2 && \
+    build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev \
+    libsqlite3-dev libncurses5-dev libgdbm-dev libnss3-dev liblzma-dev && \
     apt-get clean
+
+# Download and install Python 3.12.4
+RUN wget https://www.python.org/ftp/python/3.12.4/Python-3.12.4.tgz && \
+    tar -xvf Python-3.12.4.tgz && \
+    cd Python-3.12.4 && \
+    ./configure --enable-optimizations && \
+    make -j$(nproc) && \
+    sudo make altinstall && \
+    cd .. && rm -rf Python-3.12.4 Python-3.12.4.tgz
+
+# Set Python 3.12 as the default python3
+RUN sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.12 1 && \
+    echo 1 | sudo update-alternatives --config python3 && \
+    python3 --version
+
+# Install pip for Python 3.12
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3 && \
+    python3 -m pip install --upgrade pip setuptools && \
+    pip --version
+
+# Install venv module for Python 3.12
+RUN python3 -m ensurepip && \
+    python3 -m pip install virtualenv && \
+    python3 -m venv /opt/venv
 
 # Create user
 ARG USER_NAME=ubuntu
