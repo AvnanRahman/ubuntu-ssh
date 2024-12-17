@@ -19,7 +19,7 @@ spec:
       containers:
       - name: ubuntu-22
         image: hiroominan/ubuntu-dropbear-22.04:python3.12.4
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 5617
         resources:
@@ -45,7 +45,6 @@ spec:
         - -c
         - >
           echo 'export PATH=$PATH:/usr/local/cuda/bin:/usr/local/bin' >> ~/.bashrc &&
-          echo 'export PATH=$PATH:/usr/local/cuda/bin:/usr/local/bin' > /etc/profile.d/cuda.sh &&
           echo "$USER_SSH_PUBLIC_KEY" > $HOME/.ssh/authorized_keys &&
           exec dropbear -E -F -w -g -s -j -k -p 5617 -P ./dropbearPID -r ./dropbear_rsa_host_key
         volumeMounts:

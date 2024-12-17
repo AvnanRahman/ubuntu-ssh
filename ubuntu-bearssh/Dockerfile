@@ -14,6 +14,7 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86
     && dpkg -i cuda-keyring_1.1-1_all.deb \
     && apt-get update \
     && apt-get -y install cuda-toolkit-12-4 
+RUN echo 'export PATH=$PATH:/usr/local/cuda/bin:/usr/local/bin' > /etc/profile.d/cuda.sh
 
 # Download and install Python 3.12.4
 RUN wget https://www.python.org/ftp/python/3.12.4/Python-3.12.4.tgz && \
