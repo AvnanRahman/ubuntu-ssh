@@ -44,7 +44,8 @@ spec:
         - /bin/sh
         - -c
         - >
-          echo 'export PATH=$PATH:/usr/local/bin' >> ~/.bashrc &&
+          echo 'export PATH=$PATH:/usr/local/cuda/bin:/usr/local/bin' >> ~/.bashrc &&
+          echo 'export PATH=$PATH:/usr/local/cuda/bin:/usr/local/bin' > /etc/profile.d/cuda.sh &&
           echo "$USER_SSH_PUBLIC_KEY" > $HOME/.ssh/authorized_keys &&
           exec dropbear -E -F -w -g -s -j -k -p 5617 -P ./dropbearPID -r ./dropbear_rsa_host_key
         volumeMounts:
