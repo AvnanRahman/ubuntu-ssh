@@ -6,14 +6,14 @@ RUN apt-get update && \
     nano net-tools wget vim sudo gnupg lsb-release iptables git \
     curl apt-transport-https software-properties-common ca-certificates \
     build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev \
-    libsqlite3-dev libncurses5-dev libgdbm-dev libnss3-dev liblzma-dev \ 
-    && apt-get clean \
-    && wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb \
+    libsqlite3-dev libncurses5-dev libgdbm-dev libnss3-dev liblzma-dev && \ 
+    apt-get clean
+
+# Install cuda toolkit
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb \
     && dpkg -i cuda-keyring_1.1-1_all.deb \
     && apt-get update \
-    && apt-get -y install cuda-toolkit-12-4 \
-    && rm -rf /var/lib/apt/lists/*
-    
+    && apt-get -y install cuda-toolkit-12-4 
 
 # Download and install Python 3.12.4
 RUN wget https://www.python.org/ftp/python/3.12.4/Python-3.12.4.tgz && \
