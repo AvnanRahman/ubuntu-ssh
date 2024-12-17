@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04
 
 # Install required packages
 RUN apt-get update && \
@@ -9,36 +9,43 @@ RUN apt-get update && \
     libsqlite3-dev libncurses5-dev libgdbm-dev libnss3-dev liblzma-dev && \ 
     apt-get clean
 
-# Install cuda toolkit
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb \
-    && dpkg -i cuda-keyring_1.1-1_all.deb \
-    && apt-get update \
-    && apt-get -y install cuda-toolkit-12-4 
-RUN echo 'export PATH=$PATH:/usr/local/cuda/bin:/usr/local/bin' > /etc/profile.d/cuda.sh
-
-# Download and install Python 3.12.4
-RUN wget https://www.python.org/ftp/python/3.12.4/Python-3.12.4.tgz && \
-    tar -xvf Python-3.12.4.tgz && \
-    cd Python-3.12.4 && \
+# Download and install Python 3.11.5
+RUN wget https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tgz && \
+    tar -xvf Python-3.11.5.tgz && \
+    cd Python-3.11.5 && \
     ./configure --enable-optimizations && \
-    make -j$(nproc) && \
-    sudo make altinstall && \
-    cd .. && rm -rf Python-3.12.4 Python-3.12.4.tgz
+    make && \
+    sudo make install && \
+    cd .. && rm -rf Python-3.11.5 Python-3.11.5.tgz
 
-# Set Python 3.12 as the default python3
-RUN sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.12 1 && \
+# Download and install Python 2.7.15
+# RUN wget https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz && \
+#     tar -xvf Python-2.7.15.tgz && \
+#     cd Python-2.7.15 && \
+#     ./configure --enable-optimizations && \
+#     make && \
+#     sudo make install && \
+#     cd .. && rm -rf Python-2.7.15 Python-2.7.15.tgz
+
+# Set Python 3.11 as the default python3
+RUN sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.11 1 && \
     echo 1 | sudo update-alternatives --config python3 && \
     python3 --version
 
-# Install pip for Python 3.12
+# Install pip for Python 3.11
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3 && \
     python3 -m pip install --upgrade pip setuptools && \
     pip --version
 
-# Install venv module for Python 3.12
+# Install venv module for Python 3.11
 RUN python3 -m ensurepip && \
     python3 -m pip install virtualenv && \
     python3 -m venv /opt/venv
+
+# # Install pip for Python 2.7.15
+# RUN wget -O python2.7-get-pip.py https://bootstrap.pypa.io/pip/2.7/get-pip.py | python2 && \
+#     python2 -m pip install --upgrade pip setuptools && \
+#     python2 -m pip --version
 
 # Create user
 ARG USER_NAME=ubuntu

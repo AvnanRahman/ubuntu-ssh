@@ -18,7 +18,7 @@ spec:
         nvidia.com/gpu.product: "NVIDIA-H100-80GB-HBM3"
       containers:
       - name: ubuntu-22
-        image: hiroominan/ubuntu-dropbear-22.04:python3.12.4
+        image: hiroominan/ubuntu-dropbear-22.04:python3.11.5
         imagePullPolicy: Always
         ports:
         - containerPort: 5617
