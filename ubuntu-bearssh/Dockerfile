@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 # Install required packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends dropbear openssh-sftp-server \ 
-    nano net-tools wget vim sudo gnupg lsb-release iptables \
+    nano net-tools wget vim sudo gnupg lsb-release iptables git \
     curl apt-transport-https software-properties-common ca-certificates \
     build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev \
     libsqlite3-dev libncurses5-dev libgdbm-dev libnss3-dev liblzma-dev && \

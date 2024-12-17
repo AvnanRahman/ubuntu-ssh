@@ -19,6 +19,7 @@ spec:
       containers:
       - name: ubuntu-22
         image: hiroominan/ubuntu-dropbear-22.04:python3.12.4
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5617
         resources:
