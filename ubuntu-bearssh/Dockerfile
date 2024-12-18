@@ -3,7 +3,7 @@ FROM nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04
 # Install required packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends dropbear openssh-sftp-server \ 
-    nano net-tools wget vim sudo gnupg lsb-release iptables git \
+    nano net-tools wget vim sudo gnupg lsb-release iptables git python2 \
     curl apt-transport-https software-properties-common ca-certificates \
     build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev \
     libsqlite3-dev libncurses5-dev libgdbm-dev libnss3-dev liblzma-dev && \ 
@@ -18,17 +18,9 @@ RUN wget https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tgz && \
     sudo make install && \
     cd .. && rm -rf Python-3.11.5 Python-3.11.5.tgz
 
-# Download and install Python 2.7.15
-# RUN wget https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz && \
-#     tar -xvf Python-2.7.15.tgz && \
-#     cd Python-2.7.15 && \
-#     ./configure --enable-optimizations && \
-#     make && \
-#     sudo make install && \
-#     cd .. && rm -rf Python-2.7.15 Python-2.7.15.tgz
-
-# Set Python 3.11 as the default python3
+# Set Python 3.11 and 2 the default python
 RUN sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.11 1 && \
+    sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 2 && \
     echo 1 | sudo update-alternatives --config python3 && \
     python3 --version
 
@@ -41,11 +33,6 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3 && \
 RUN python3 -m ensurepip && \
     python3 -m pip install virtualenv && \
     python3 -m venv /opt/venv
-
-# # Install pip for Python 2.7.15
-# RUN wget -O python2.7-get-pip.py https://bootstrap.pypa.io/pip/2.7/get-pip.py | python2 && \
-#     python2 -m pip install --upgrade pip setuptools && \
-#     python2 -m pip --version
 
 # Create user
 ARG USER_NAME=ubuntu
